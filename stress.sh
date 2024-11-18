@@ -24,3 +24,5 @@ do
     fi
 done
 echo Passed $4 tests
+
+# ./stress.sh wrong correct gen times
