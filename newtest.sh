@@ -2,7 +2,9 @@
 
 cnt=0
 for i in incp*.txt; do
-	cnt=$((cnt + 1));
+	if [ -e "$i" ]; then
+		cnt=$((cnt + 1));
+	fi
 done;
 
 echo -e "\e[4mInput $cnt\e[0m"

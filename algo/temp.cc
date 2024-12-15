@@ -10,13 +10,13 @@ using namespace std;
 void solve() {
 }
 
-int main() {
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
-  int n = 1;
-  cin >> n;
-  for (int i = 1; i <= n; i++) {
-//    cout << "Case #" << i << ": ";
-    solve();
-  }
+int32_t main() {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	int n = 1;
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		// cout << "Case #" << i << ": ";
+		solve();
+	}
 }
