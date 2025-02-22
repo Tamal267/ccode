@@ -16,7 +16,7 @@ signed main() {
   int t = 1;
   // t = rand(1, 10), cout << t << '\n';
 	while (t--) {
-		int N = 1e7;
+		int N = 1e5;
 		int a = rand(0, N), b = rand(0, N);
 		cout << a << ' ' << b << '\n';
 	}
