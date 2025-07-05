@@ -1,7 +1,6 @@
-# Ignore everything
-
-# Except these specific files and directories
-!/algo/
+# Ignore everything in root
+/*
+# Except these specific files
 !/gen.cpp
 !/mydebug.h
 !/newtest.sh
@@ -9,5 +8,8 @@
 !/stress.sh
 !/validate.sh
 
-# To prevent git from treating directories as empty, we need to explicitly allow their contents
+# Ignore everything in all subdirectories
+/**/*
+# Except the algo directory and its contents
+!/algo/
 !/algo/**
