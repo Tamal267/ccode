@@ -1,10 +1,26 @@
-int maxSubArraySum(vector<int> &a) {
-	int size = a.size();
-	int maxTill = INT_MIN, maxEnd = 0;
-	for (int i = 0; i < size; i++) {
-		maxEnd = maxEnd + a[i];
-		if (maxTill < maxEnd) maxTill = maxEnd;
-		if (maxEnd < 0) maxEnd = 0;
+int minSubarraySum(vector<int> &arr) {
+	int n = arr.size();
+	int min_current = arr[0];
+	int min_global = arr[0];
+
+	for (int i = 1; i < n; i++) {
+		min_current = min(arr[i], min_current + arr[i]);
+		min_global = min(min_global, min_current);
 	}
-	return maxTill;
+
+	return min_global;
 }
+
+int maxSubarraySum(vector<int> &arr) {
+	int n = arr.size();
+	int max_current = arr[0];
+	int max_global = arr[0];
+
+	for (int i = 1; i < n; i++) {
+		max_current = max(arr[i], max_current + arr[i]);
+		max_global = max(max_global, max_current);
+	}
+
+	return max_global;
+}
+

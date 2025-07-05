@@ -1,11 +1,9 @@
-int power(int base, int n, int m = mod) {
-  if (n == 0) return 1;
-  if (n & 1) {
-    int x = power(base, n / 2);
-    return ((x * x) % m * base) % m;
+int power(long long n, long long k, int mod) {
+  int ans = 1 % mod; n %= mod; if (n < 0) n += mod;
+  while (k) {
+    if (k & 1) ans = (long long) ans * n % mod;
+    n = (long long) n * n % mod;
+    k >>= 1;
   }
-  else {
-    int x = power(base, n / 2);
-    return (x * x) % m;
-  }
+  return ans;
 }

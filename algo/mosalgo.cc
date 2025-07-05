@@ -1,6 +1,19 @@
-void remove(int idx);
-void add(int idx);
-int get_answer();
+const int N = 1e6 + 5;
+int arr[N], freq[N], cnt = 0;
+
+void remove(int idx) {
+	int v = arr[idx];
+	freq[v]--;
+	if (freq[v] == 0) cnt--;
+}
+void add(int idx) {
+	int v = arr[idx];
+	freq[v]++;
+	if (freq[v] == 1) cnt++;
+}
+int get_answer() {
+	return cnt;
+}
 
 int block_size = 700;
 
