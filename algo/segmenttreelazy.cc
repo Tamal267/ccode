@@ -44,7 +44,7 @@ void update(int node, int l, int r, int ql, int qr, int val) {
 }
 
 int query(int node, int l, int r, int ql, int qr) {
-	if(qr < l || r < ql) return 0;
+	if(qr < l || r < ql) return 0; // check it!
 	if(ql <= l && r <= qr) return seg[node];
 	
 	push(node, l, r);
