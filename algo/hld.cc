@@ -1,65 +1,70 @@
 vector<int> g[N];
-int par[N][LG + 1], dep[N], sz[N];
+int par[N], dep[N], sz[N];
 
 void dfs(int u, int p = 0) {
-  par[u][0] = p;
-  dep[u] = dep[p] + 1;
-  sz[u] = 1;
-  for (int i = 1; i <= LG; i++) par[u][i] = par[par[u][i - 1]][i - 1];
-  if (p) g[u].erase(find(g[u].begin(), g[u].end(), p));
-  for (auto &v : g[u]) if (v != p) {
-      dfs(v, u);
-      sz[u] += sz[v];
-      if(sz[v] > sz[g[u][0]]) swap(v, g[u][0]);
-    }
-}
-
-int lca(int u, int v) {
-  if (dep[u] < dep[v]) swap(u, v);
-  for (int k = LG; k >= 0; k--) if (dep[par[u][k]] >= dep[v]) u = par[u][k];
-  if (u == v) return u;
-  for (int k = LG; k >= 0; k--) if (par[u][k] != par[v][k]) u = par[u][k], v = par[v][k];
-  return par[u][0];
-}
-
-int kth(int u, int k) {
-  assert(k >= 0);
-  for (int i = 0; i <= LG; i++) if (k & (1 << i)) u = par[u][i];
-  return u;
+	sz[u] = 1, par[u] = p;
+	dep[u] = dep[p] + 1;
+	int mx = 0;
+	for (auto &v: g[u]) {
+		if (v == p) continue;
+		dfs(v, u);
+		sz[u] += sz[v];
+		if (sz[v] > mx) {
+			mx = sz[v];
+			swap(v, g[u][0]);
+		}
+	}
 }
 
 int T, head[N], st[N], en[N];
 
-void dfs_hld(int u) {
-  st[u] = ++T;
-	arr[T] = a[u]; // modify accordingly
-  for (auto v : g[u]) {
-    head[v] = (v == g[u][0] ? head[u] : v);
-    dfs_hld(v);
-  }
-  en[u] = T;
+void dfs_hld(int u, int p = 0) {
+	st[u] = ++T;
+	// arr[T] = a[u];
+	head[u] = (p != 0 && g[p][0] == u) ? head[p] : u;
+	for (auto v: g[u]) {
+		if (v == p) continue;
+		dfs_hld(v, u);
+	}
+	en[u] = T;
+}
+
+int lca(int a, int b) {
+	for (; head[a] != head[b]; b = par[head[b]]) {
+		if (dep[head[a]] > dep[head[b]]) swap(a, b);
+	}
+	if (dep[a] > dep[b]) swap(a, b);
+	return a;
 }
 
 int n;
 
-i64 query_up(int u, int v) {
-  i64 ans = 0;
-  while(head[u] != head[v]) {
-    ans = ans + query(1, 1, n, st[head[u]], st[u]);
-    u = par[head[u]][0];
-  }
-  ans = ans + query(1, 1, n, st[v], st[u]);
-  return ans;
+// process node u upto it's ancestor a
+// if excl is true, a won't process
+i64 chain_process(int a, int u, bool excl = false) {
+	i64 ans = 0;
+	for (; head[u] != head[a]; u = par[head[u]]) {
+		ans = ans + query(1, 1, n, st[head[u]], st[u]);	
+	}
+	ans = ans + query(1, 1, n, st[a] + excl, st[u]);	
+	return ans;
 }
-i64 query(int u, int v) {
-  int l = lca(u, v);
-  i64 ans = query_up(u, l);
-  if (v != l) ans = ans + query_up(v, kth(v, dep[v] - dep[l] - 1));
-  return ans;
+
+// process path from node u to v
+// if excl is true, lca won't process
+i64 path_process(int a, int b, bool excl = false) {
+	i64 ans = 0;
+	for (; head[a] != head[b]; b = par[head[b]]) {
+		if (dep[head[a]] > dep[head[b]]) swap(a, b);
+		ans = ans + query(1, 1, n, st[head[b]], st[b]);
+	}
+	if (dep[a] > dep[b]) swap(a, b);
+	ans = ans + query(1, 1, n, st[a] + excl, st[b]);
+	return ans;
 }
 /*
- 	dfs(1);
-	head[1] = 1;
-	dfs_hld(1);
-	build(1, 1, n);
+	 dfs(1);
+	 head[1] = 1;
+	 dfs_hld(1);
+	 build(1, 1, n);
 */
