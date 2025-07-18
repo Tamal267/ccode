@@ -63,17 +63,15 @@ i64 path_process(int a, int b, bool excl = false) {
 	return ans;
 }
 
-// process path from node u to v
-// if excl is true, lca won't process
-i64 path_update(int a, int b, int val, bool excl = false) {
-	i64 ans = 0;
+// update path from node u to v
+// if excl is true, lca won't update
+void path_update(int a, int b, int val, bool excl = false) {
 	for (; head[a] != head[b]; b = par[head[b]]) {
 		if (dep[head[a]] > dep[head[b]]) swap(a, b);
 		update(1, 1, n, st[head[b]], st[b], val);
 	}
 	if (dep[a] > dep[b]) swap(a, b);
 	update(1, 1, n, st[a] + excl, st[b], val);
-	return ans;
 }
 /*
 	 dfs(1);
