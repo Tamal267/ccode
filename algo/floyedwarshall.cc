@@ -1,23 +1,16 @@
-typedef double T;
-typedef vector<T> VT;
-typedef vector<VT> VVT;
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-bool FloydWarshall(VVT &w, VVI &prev) {
-  int n = w.size();
-  prev = VVI(n, VI(n, -1));
-  for (int k = 0; k < n; k++) {
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-        if (w[i][j] > w[i][k] + w[k][j]) {
-          w[i][j] = w[i][k] + w[k][j];
-          prev[i][j] = k;
+const int inf = 1e9;
+const int MAXN = 105;
+
+int dist[MAXN][MAXN];
+
+void floydWarshall(int n) {
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (dist[i][k] < inf && dist[k][j] < inf)
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+            }
         }
-      }
     }
-  }
-  for (int i = 0; i < n; i++)
-    if (w[i][i] < 0)
-      return false;
-  return true;
 }
+
