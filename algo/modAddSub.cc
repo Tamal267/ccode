@@ -1,10 +1,14 @@
-void add (int &a, int b) {
-	a += b;
-	if (a >= mod) a -= mod;
+int add(int x, int y) {
+     x += y;
+     if (x >= mod) x -= mod;
+     if (x < 0) x += mod;
+     return x;
+}
+ 
+int mul(int x, int y) {
+    return x * 1LL * y % mod;
 }
 
-void sub (int &a, int b) {
-	a -= b;
-	if (a < 0) a += mod;
+int divide(int x, int y) {
+    return mul(x, power(y, mod - 2));
 }
-
