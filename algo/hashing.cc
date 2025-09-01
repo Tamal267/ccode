@@ -52,7 +52,6 @@ int lcp(int i1, int j1, int i2, int j2) {
 	while (l <= r) {
 		int mid = (l + r) / 2;
 		if (hs.get_hash(i1 + 1, i1 + mid) == hs.get_hash(i2 + 1, i2 + mid)) {
-			debug(mid, i1, i2);
 			ans = mid;
 			l = mid + 1;
 		}
@@ -66,7 +65,6 @@ int lcp(int i1, int j1, int i2, int j2) {
 int compare(int i1, int j1, int i2, int j2) {
 	int l = lcp(i1, j1, i2, j2);
  	int len1 = j1 - i1 + 1, len2 = j2 - i2 + 1;
- 	debug(l, len1, len2, i1, i2);
 	if (len1 == len2 && l == len1) return 0;
  	if (l == len1) return -1;
 	if (l == len2) return 1;
