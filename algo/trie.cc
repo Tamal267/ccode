@@ -27,7 +27,7 @@ int search(Node* node, string s) {
 		node = node->child[r];
 	}
 	return node->EoW;
-} // insert(root, s);
+} // search(root, s);
 
 void print(Node* node, string s = "") {
 	if (node->EoW) cout << s << "\n";
