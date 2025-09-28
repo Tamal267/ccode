@@ -1,5 +1,5 @@
 struct SuffixArray {
-	// p suffix array 1 base, 0 index for $
+	// p suffix array 1 base, 0 index for dollar
 	// rank will show 1 index value
 	// 0 base suffix array -> suf[rank[i] - 1] = i
 	vector<int> p, c, rank, lcp;
