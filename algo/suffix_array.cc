@@ -1,5 +1,7 @@
 struct SuffixArray {
 	// p suffix array 1 base, 0 index for $
+	// rank will show 1 index value
+	// 0 base suffix array -> suf[rank[i] - 1] = i
 	vector<int> p, c, rank, lcp;
 	vector<vector<int>> st;
 	SuffixArray(string const& s) {
@@ -74,6 +76,23 @@ struct SuffixArray {
 		j--; /*for lcp from i to j we don't need last lcp*/
 		int K = __lg(j - i + 1);
 		return min(st[K][i], st[K][j - (1 << K) + 1]);
+	}
+	// Compare two substrings (l1, r1) and (l2, r2)
+	int compare(int l1, int r1, int l2, int r2) {
+		int len1 = r1 - l1 + 1;
+		int len2 = r2 - l2 + 1;
+		int pos1 = rank[l1];
+		int pos2 = rank[l2];
+		if (pos1 == pos2) {
+			if (len1 != len2) return len1 < len2 ? -1 : 1;
+			return 0;
+		}
+		int common = get_lcp(min(pos1, pos2), max(pos1, pos2));
+		int compare_len = min(min(len1, len2), common);
+		if (compare_len == len1 && compare_len == len2) return 0;
+		if (compare_len == len1) return -1;
+		if (compare_len == len2) return 1;
+		return pos1 < pos2 ? -1 : 1;
 	}
 };
 // s.compare(suf[mid], min(n - suf[mid], m), t) -> -1(small), 0(equal), 1(large)
