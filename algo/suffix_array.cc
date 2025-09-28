@@ -75,4 +75,4 @@ struct SuffixArray {
 		return min(st[K][i], st[K][j - (1 << K) + 1]);
 	}
 };
-
+// s.compare(suf[mid], min(n - suf[mid], m), t) -> -1(small), 0(equal), 1(large)
