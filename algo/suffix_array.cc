@@ -1,4 +1,5 @@
 struct SuffixArray {
+	// p suffix array 1 base, 0 index for $
 	vector<int> p, c, rank, lcp;
 	vector<vector<int>> st;
 	SuffixArray(string const& s) {
