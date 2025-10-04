@@ -41,7 +41,7 @@ void print(Node* node, string s = "") {
 
 void remove(Node* node, string s) {
     for (size_t i = 0; i < s.size(); i++) {
-        int r = s[i] - base;
+        int r = s[i] - BASE;
         if (node->child[r] == NULL) return;
         node = node->child[r];
     }
@@ -53,4 +53,4 @@ void delete_trie(Node* node) {
 		if (node->child[i] != NULL) delete_trie(node->child[i]);
 	}
 	delete node;
-} // delete full trie
+} // delete full trie, then root = new Node()
