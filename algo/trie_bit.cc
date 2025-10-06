@@ -43,3 +43,11 @@ void remove(Node* node, int x) {
 	}
 } // remove(root, x)
 
+void clearTrie(Node* node) {
+    if (node == nullptr) return;
+    clearTrie(node->child[0]);
+    clearTrie(node->child[1]);
+    delete node;
+}
+// clearTrie(root), delete full trie
+// root = new Node()
