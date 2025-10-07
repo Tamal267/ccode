@@ -2,7 +2,7 @@ const int N = 2e5 + 5;
 vector<pair<int, int>> g[N];
 int vis[N], st[N], low[N];
 int clk, n;
-vector<pair<int, int>> brides;
+vector<pair<int, int>> bridges;
 
 void dfs(int u, int p, int edg) {
 	vis[u] = 1;
