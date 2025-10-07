@@ -19,7 +19,7 @@ void dfs(int u, int p, int edg) {
 			low[u] = min(low[u], low[v]);
 			if (st[u] < low[v]) {
 				// edge u, v has bridge
-				bridges.emplace_back({u, v}); 
+				bridges.push_back({u, v}); 
 			}
 		}
 	}
