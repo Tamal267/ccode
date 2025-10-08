@@ -1,4 +1,4 @@
-const int N = 1e5 + 5, LG = 17;
+const int N = 2e5 + 5, LG = 20;
 vector<int> g[N];
 int depth[N], parent[N][LG];
 
