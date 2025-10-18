@@ -74,6 +74,7 @@ void path_update(int a, int b, int val, bool excl = false) {
 	update(1, 1, n, st[a] + excl, st[b], val);
 }
 /*
+	 n is global
 	 dfs(1);
 	 head[1] = 1;
 	 dfs_hld(1);
