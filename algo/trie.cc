@@ -1,5 +1,5 @@
 const int N = 26;
-char BASE = 'A'
+char BASE = 'A';
 class Node {
 	public:
 		int EoW;
