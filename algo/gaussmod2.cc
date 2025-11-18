@@ -42,3 +42,6 @@ struct Gauss {
 		for (int i = bits - 1;i >= 0;i--) add(other.table[i]);
 	}
 };
+// Gauss<long long> g(60);
+// g.add(x);
+// g.getBest();
