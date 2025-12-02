@@ -1,47 +1,53 @@
 template<typename T>
 struct Gauss {
-	int bits = 60;
-	vector<T>table;
-	Gauss() {
+	int bits;
+	vector<T> table;
+	int rank = 0;  // track rank for efficiency
+	Gauss() : bits(60) {
 		table = vector<T>(bits, 0);
 	}
-	//call with constructor to define bit size.
-	Gauss(int _bits) {
-		bits = _bits;
+	Gauss(int _bits) : bits(_bits) {
 		table = vector<T>(bits, 0);
 	}
-	int basis()//return rank/size of basis
-	{
-		int ans = 0;
-		for (int i = 0;i < bits;i++)
-			if (table[i])
-				ans++;
-		return ans;
+	// Return rank/size of basis
+	int basis_size() {
+		return rank;
 	}
-	bool can(T x)//can x be obtained from the basis
-	{
-		for (int i = bits - 1;i >= 0;i--) x = min(x, x ^ table[i]);
-		return x == 0;
+	// Check if x can be obtained from the basis
+	bool can(T x) {
+		for (int i = bits - 1; i >= 0; i--) {
+			if (!(x >> i & 1)) continue;
+			if (!table[i]) return false;
+			x ^= table[i];
+		}
+		return true;
 	}
 	void add(T x) {
-		for (int i = bits - 1;i >= 0 && x;i--) {
-			if (table[i] == 0) {
+		for (int i = bits - 1; i >= 0; i--) {
+			if (!(x >> i & 1)) continue;  // Skip if bit i is 0
+			if (!table[i]) {
 				table[i] = x;
-				x = 0;
+				rank++;
+				return;
 			}
-			else x = min(x, x ^ table[i]);
+			x ^= table[i];  // Eliminate this bit using XOR
+		}
+		// x became 0 (linearly dependent)
+	}
+	T get_max_xor() {
+		T ans = 0;
+		for (int i = bits - 1; i >= 0; i--) {
+			if ((ans ^ table[i]) > ans) {
+				ans ^= table[i];
+			}
+		}
+		return ans;
+	}
+	void merge(Gauss& other) {
+		for (int i = bits - 1; i >= 0; i--) {
+			if (other.table[i]) {
+				add(other.table[i]);
+			}
 		}
 	}
-	T getBest() {
-		T x = 0;
-		for (int i = bits - 1;i >= 0;i--)
-			x = max(x, x ^ table[i]);
-		return x;
-	}
-	void Merge(Gauss& other) {
-		for (int i = bits - 1;i >= 0;i--) add(other.table[i]);
-	}
 };
-// Gauss<long long> g(60);
-// g.add(x);
-// g.getBest();
