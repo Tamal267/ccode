@@ -51,3 +51,6 @@ struct Gauss {
 		}
 	}
 };
+// Gauss<long long> g(60);
+// g.add(x);
+// g.get_max_xor();
